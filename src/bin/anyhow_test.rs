@@ -12,8 +12,7 @@ fn might_fail(input: i32) -> Result<i32> {
 }
 
 fn process_data(data: i32) -> Result<()> {
-    let result = might_fail(data)
-        .with_context(|| format!("Failed to process data: {}", data))?;
+    let result = might_fail(data).with_context(|| format!("Failed to process data: {}", data))?;
 
     // 假设我们在这里进行了一些处理
     println!("Processed data: {}", result);

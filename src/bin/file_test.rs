@@ -6,8 +6,6 @@ fn main() {
     temp_file.write_all("Rust\n💖\nFun".as_ref());
 
     let mut buffer = String::new();
-    let res = temp_file.read_to_string(&mut buffer).unwrap();
+    temp_file.read_to_string(&mut buffer).unwrap(); // todo questionable
     println!("{}", buffer)
-    
-    
 }
