@@ -1,6 +1,6 @@
-use chrono::{DateTime, Duration, NaiveDate, NaiveDateTime};
+use chrono::{DateTime, Duration, NaiveDate, NaiveDateTime, TimeDelta};
 use chrono_tz::Tz;
-use chrono_tz::Tz::Asia__Shanghai;
+
 pub const DEFAULT_DATE_STR: &str = "%Y-%m-%d";
 
 pub const DEFAULT_DATE_TIME_STR: &str = "%Y-%m-%d %H:%M:%S";
@@ -21,21 +21,34 @@ pub fn to_datetime_with_pattern(s: &str, pattern: &str) -> NaiveDateTime {
     return NaiveDateTime::parse_from_str(s, pattern).unwrap();
 }
 
-pub fn day_offset(date: NaiveDateTime, offset: i64) -> NaiveDateTime {
-    date.checked_add_signed(Duration::days(offset)).unwrap()
+pub fn naive_date_offset_days(date: NaiveDate, offset: i64) -> NaiveDate {
+    naive_date_offset(date, Duration::days(offset))
 }
 
-pub fn days_offset(date_time: DateTime<Tz>, offset: i64) -> DateTime<Tz> {
-    date_time
-        .checked_add_signed(Duration::days(offset))
-        .unwrap()
+pub fn naive_date_offset(date: NaiveDate, rhs: TimeDelta) -> NaiveDate {
+    date.checked_add_signed(rhs).unwrap()
+}
+
+pub fn naive_date_time_offset_days(date_time: NaiveDateTime, offset: i64) -> NaiveDateTime {
+    naive_date_time_offset(date_time, Duration::days(offset))
+}
+
+pub fn naive_date_time_offset(date_time: NaiveDateTime, rhs: TimeDelta) -> NaiveDateTime {
+    date_time.checked_add_signed(rhs).unwrap()
+}
+
+pub fn date_time_offset_days(date_time: DateTime<Tz>, offset: i64) -> DateTime<Tz> {
+    date_time_offset(date_time, Duration::days(offset))
+}
+
+pub fn date_time_offset(date_time: DateTime<Tz>, rhs: TimeDelta) -> DateTime<Tz> {
+    date_time.checked_add_signed(rhs).unwrap()
 }
 
 #[cfg(test)]
 mod tests {
-    use chrono::Datelike;
-
     use super::*;
+    use chrono::Datelike;
 
     #[test]
     fn it_works() {
@@ -49,7 +62,7 @@ mod tests {
     #[test]
     fn test_dat_offset() {
         let d = to_date("2024-06-22");
-        let d1 = day_offset(d, -2);
+        let d1 = naive_date_offset_days(d, -2);
         assert_eq!(d1.year(), 2024);
         assert_eq!(d1.month(), 6);
         assert_eq!(d1.day(), 20);

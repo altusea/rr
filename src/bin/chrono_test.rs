@@ -1,7 +1,6 @@
-use chrono::{DateTime, Local, NaiveDate, TimeZone};
+use chrono::{DateTime, Local, TimeZone};
 use chrono_tz::Tz::Asia__Shanghai;
-use rr::common::date_util::days_offset;
-use std::fmt::Debug;
+use rr::common::date_util::date_time_offset_days;
 
 fn main() {
     let dt1: DateTime<Local> = Local::now();
@@ -14,6 +13,6 @@ fn main() {
         .unwrap();
     println!("{}", a);
 
-    let b = days_offset(a, 10);
+    let b = date_time_offset_days(a, 10);
     println!("{}", b)
 }

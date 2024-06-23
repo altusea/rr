@@ -1,11 +1,16 @@
+use std::fs::File;
 use std::io::{Read, Write};
-use tempfile::tempfile;
+use tempfile::NamedTempFile;
 
 fn main() {
-    let mut temp_file = tempfile().unwrap();
-    temp_file.write_all("Rust\n💖\nFun".as_ref());
+    let mut temp_file = NamedTempFile::new().unwrap();
+    // write
+    temp_file.write_all("Rust\n💖\nFun".as_ref()).unwrap();
+    let temp_file_path = temp_file.path();
 
+    // read
+    let mut file = File::open(temp_file_path).unwrap();
     let mut buffer = String::new();
-    temp_file.read_to_string(&mut buffer).unwrap(); // todo questionable
+    file.read_to_string(&mut buffer).unwrap();
     println!("{}", buffer)
 }
