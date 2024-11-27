@@ -2,8 +2,8 @@ use anyhow::{Context, Result};
 use rand::Rng;
 
 fn might_fail(input: i32) -> Result<i32> {
-    let mut rng = rand::thread_rng(); // 获取线程局部的随机数生成器
-    let n: f64 = rng.gen_range(0.0..1.0); // 生成一个 0 到 1 之间的浮点数
+    let mut rng = rand::rng(); // 获取线程局部的随机数生成器
+    let n: f64 = rng.random_range(0.0..1.0); // 生成一个 0 到 1 之间的浮点数
     if n < 0.5 {
         Err(anyhow::anyhow!("Input cannot be negative"))
     } else {
