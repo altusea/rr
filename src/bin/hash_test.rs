@@ -29,7 +29,9 @@ fn main() {
     println!("{}", res[..].iter().encode_hex::<String>());
     assert_eq!(
         res[..],
-        hex!("021ced8799296ceca557832ab941a50b4a11f83478cf141f51f933f653ab9fbcc05a037cddbed06e309bf334942c4e58cdf1a46e237911ccd7fcf9787cbc7fd0")[..]
+        hex!(
+            "021ced8799296ceca557832ab941a50b4a11f83478cf141f51f933f653ab9fbcc05a037cddbed06e309bf334942c4e58cdf1a46e237911ccd7fcf9787cbc7fd0"
+        )[..]
     );
 
     // same example for Blake2s256:

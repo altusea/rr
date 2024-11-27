@@ -1,5 +1,3 @@
-use reqwest; // 引入 reqwest 库
-
 #[tokio::main] // 使用 tokio 作为异步运行时
 async fn main() {
     // 定义你想要请求的 URL

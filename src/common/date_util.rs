@@ -6,19 +6,19 @@ pub const DEFAULT_DATE_STR: &str = "%Y-%m-%d";
 pub const DEFAULT_DATE_TIME_STR: &str = "%Y-%m-%d %H:%M:%S";
 
 pub fn to_date(s: &str) -> NaiveDate {
-    return to_date_with_pattern(s, DEFAULT_DATE_STR);
+    to_date_with_pattern(s, DEFAULT_DATE_STR)
 }
 
 pub fn to_date_with_pattern(s: &str, pattern: &str) -> NaiveDate {
-    return NaiveDate::parse_from_str(s, pattern).unwrap();
+    NaiveDate::parse_from_str(s, pattern).unwrap()
 }
 
 pub fn to_datetime(s: &str) -> NaiveDateTime {
-    return to_datetime_with_pattern(s, DEFAULT_DATE_TIME_STR);
+    to_datetime_with_pattern(s, DEFAULT_DATE_TIME_STR)
 }
 
 pub fn to_datetime_with_pattern(s: &str, pattern: &str) -> NaiveDateTime {
-    return NaiveDateTime::parse_from_str(s, pattern).unwrap();
+    NaiveDateTime::parse_from_str(s, pattern).unwrap()
 }
 
 pub fn naive_date_offset_days(date: NaiveDate, offset: i64) -> NaiveDate {
