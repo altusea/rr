@@ -1,6 +1,6 @@
+use chacha20poly1305::ChaCha20Poly1305;
 use chacha20poly1305::aead::rand_core::RngCore;
 use chacha20poly1305::aead::{Aead, AeadCore, KeyInit, OsRng};
-use chacha20poly1305::ChaCha20Poly1305;
 
 fn main() {
     let key = ChaCha20Poly1305::generate_key(&mut OsRng);

@@ -3,91 +3,13 @@
 use std::collections::{BinaryHeap, HashSet};
 use std::net::Ipv4Addr;
 
-use itertools::Itertools;
-
-fn name_shuffler(s: &str) -> String {
-    s.split_whitespace().rev().join(" ")
-}
-
-fn get_k_smallest<T: Copy + Ord + PartialOrd>(arr: &mut [T], k: usize) -> Vec<T> {
-    if arr.is_empty() || k == 0 {
-        return vec![];
-    }
-
-    let k = k.min(arr.len());
-
-    // Quickselect implementation
-    fn quickselect<T: Copy + Ord + PartialOrd>(arr: &mut [T], k: usize) {
-        if arr.len() <= 1 {
-            return;
-        }
-
-        let pivot_idx = partition(arr);
-        match pivot_idx.cmp(&k) {
-            std::cmp::Ordering::Equal => {}
-            std::cmp::Ordering::Greater => quickselect(&mut arr[..pivot_idx], k),
-            std::cmp::Ordering::Less => quickselect(&mut arr[pivot_idx + 1..], k - pivot_idx - 1),
-        }
-    }
-
-    // Lomuto partition scheme
-    fn partition<T: Copy + Ord + PartialOrd>(arr: &mut [T]) -> usize {
-        let pivot_idx = arr.len() - 1;
-        let mut i = 0;
-        for j in 0..pivot_idx {
-            if arr[j] <= arr[pivot_idx] {
-                arr.swap(i, j);
-                i += 1;
-            }
-        }
-        arr.swap(i, pivot_idx);
-        i
-    }
-
-    quickselect(arr, k - 1);
-    arr[..k].to_vec()
-}
-
-fn build_matches_table(num_teams: u32) -> Vec<Vec<(u32, u32)>> {
-    if num_teams < 2 {
-        return vec![];
-    }
-
-    let mut matches_table = Vec::new();
-    let mut teams: Vec<u32> = (1..=num_teams).collect();
-
-    // If odd number of teams, add a dummy team
-    if num_teams % 2 != 0 {
-        teams.push(0);
-    }
-
-    let num_rounds = teams.len() - 1;
-
-    for _ in 0..num_rounds {
-        let mut round_matches = Vec::new();
-
-        // Pair teams
-        for i in 0..teams.len() / 2 {
-            let team1 = teams[i];
-            let team2 = teams[teams.len() - 1 - i];
-
-            // Skip if either team is the dummy team
-            if team1 != 0 && team2 != 0 {
-                round_matches.push((team1, team2));
-            }
-        }
-
-        matches_table.push(round_matches);
-
-        // Rotate teams (keep first team fixed)
-        teams = vec![teams[0]]
-            .into_iter()
-            .chain(teams[2..].iter().cloned())
-            .chain(vec![teams[1]].into_iter())
-            .collect();
-    }
-
-    matches_table
+fn zip_with<F, T, S, R>(f: F, a: &[T], b: &[S]) -> Vec<R>
+where
+    F: Fn(T, S) -> R,
+    T: Copy,
+    S: Copy,
+{
+    a.iter().zip(b.iter()).map(|(&x, &y)| f(x, y)).collect()
 }
 
 fn multiply(a: &str, b: &str) -> String {
@@ -169,8 +91,8 @@ impl<T: Clone> Cons<T> {
     }
 
     pub fn to_vec(&self) -> Vec<T> {
-        match &self {
-            Cons::Null => vec![],
+        match self {
+            &Cons::Null => vec![],
             Cons::Cons(head, tail) => {
                 let mut head = vec![head.clone()];
                 head.extend(tail.to_vec());

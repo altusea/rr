@@ -2,3 +2,5 @@ print_misformatted_file_names = true
 # group_imports = "One"
 # imports_granularity = "Module"
 use_try_shorthand = true
+# format_strings = true
+# reorder_impl_items = true
