@@ -3,6 +3,128 @@
 use std::collections::{BinaryHeap, HashSet};
 use std::net::Ipv4Addr;
 
+fn sudoku(puzzle: &mut [[u8; 9]; 9]) {
+    while !is_solved(puzzle) {
+        let mut made_progress = false;
+
+        // Scan each cell in the 9x9 grid
+        for row in 0..9 {
+            for col in 0..9 {
+                // If cell is empty (0)
+                if puzzle[row][col] == 0 {
+                    // Get all valid numbers for this position
+                    let valid_nums = get_valid_numbers(puzzle, row, col);
+
+                    // If there's exactly one valid number, fill it in
+                    if valid_nums.len() == 1 {
+                        puzzle[row][col] = valid_nums[0];
+                        made_progress = true;
+                    }
+                }
+            }
+        }
+
+        // If no progress was made in this iteration, the puzzle might be invalid
+        // or require guessing (which isn't needed for "easy" puzzles per the requirement)
+        if !made_progress {
+            break;
+        }
+    }
+}
+
+// Check if puzzle is fully solved (no zeros remaining)
+fn is_solved(puzzle: &[[u8; 9]; 9]) -> bool {
+    for row in 0..9 {
+        for col in 0..9 {
+            if puzzle[row][col] == 0 {
+                return false;
+            }
+        }
+    }
+    true
+}
+
+// Get valid numbers that can be placed at puzzle[row][col]
+fn get_valid_numbers(puzzle: &[[u8; 9]; 9], row: usize, col: usize) -> Vec<u8> {
+    let mut used = [false; 10]; // Index 0 unused, 1-9 for numbers
+
+    // Check row
+    for c in 0..9 {
+        used[puzzle[row][c] as usize] = true;
+    }
+
+    // Check column
+    for r in 0..9 {
+        used[puzzle[r][col] as usize] = true;
+    }
+
+    // Check 3x3 box
+    let box_row = (row / 3) * 3;
+    let box_col = (col / 3) * 3;
+    for r in box_row..box_row + 3 {
+        for c in box_col..box_col + 3 {
+            used[puzzle[r][c] as usize] = true;
+        }
+    }
+
+    // Collect all unused numbers from 1-9
+    let mut valid = Vec::new();
+    for num in 1..=9 {
+        if !used[num as usize] {
+            valid.push(num);
+        }
+    }
+    valid
+}
+
+fn snail(matrix: &[Vec<i32>]) -> Vec<i32> {
+    // Handle empty matrix
+    if matrix.is_empty() || matrix[0].is_empty() {
+        return Vec::new();
+    }
+
+    let n = matrix.len();
+    let mut result = Vec::with_capacity(n * n);
+    let mut top = 0;
+    let mut bottom = n - 1;
+    let mut left = 0;
+    let mut right = n - 1;
+
+    while top <= bottom && left <= right {
+        // Traverse right
+        for j in left..=right {
+            result.push(matrix[top][j]);
+        }
+        top += 1;
+
+        // Traverse down
+        for i in top..=bottom {
+            result.push(matrix[i][right]);
+        }
+        if right > 0 {
+            right -= 1;
+        }
+
+        if top <= bottom {
+            // Traverse left
+            for j in (left..=right).rev() {
+                result.push(matrix[bottom][j]);
+            }
+            bottom -= 1;
+        }
+
+        if left <= right {
+            // Traverse up
+            for i in (top..=bottom).rev() {
+                result.push(matrix[i][left]);
+            }
+            left += 1;
+        }
+    }
+
+    result
+}
+
 fn zip_with<F, T, S, R>(f: F, a: &[T], b: &[S]) -> Vec<R>
 where
     F: Fn(T, S) -> R,
