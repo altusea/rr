@@ -219,7 +219,7 @@ impl<T: Clone> Cons<T> {
                 let mut head = vec![head.clone()];
                 head.extend(tail.to_vec());
                 head
-            }
+            },
         }
     }
 }
@@ -251,7 +251,7 @@ impl<T: Clone> Cons<T> {
                 } else {
                     tail.filter(fun)
                 }
-            }
+            },
         }
     }
 

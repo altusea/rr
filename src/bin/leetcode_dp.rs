@@ -172,7 +172,7 @@ pub fn tribonacci(n: i32) -> i32 {
                 t2 = t + t0 + t1;
             }
             t2
-        }
+        },
     }
 }
 

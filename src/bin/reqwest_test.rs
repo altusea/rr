@@ -14,10 +14,10 @@ async fn main() {
                 // 如果响应码不是 2xx，打印错误信息
                 eprintln!("Request failed with status: {}", response.status());
             }
-        }
+        },
         Err(e) => {
             // 如果请求失败，打印错误信息
             eprintln!("Request failed: {}", e);
-        }
+        },
     }
 }
