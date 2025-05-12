@@ -3,6 +3,50 @@
 use std::collections::{BinaryHeap, HashSet};
 use std::net::Ipv4Addr;
 
+fn nth_smallest(nums: &[i32], pos: usize) -> i32 {
+    // 创建数组的副本并排序
+    let mut sorted_nums = nums.to_vec();
+    sorted_nums.sort();
+
+    // 返回第pos小的元素（pos从1开始，所以索引是pos-1）
+    sorted_nums[pos - 1]
+}
+
+fn ordered_count(sip: &str) -> Vec<(char, i32)> {
+    let mut counts = std::collections::HashMap::new();
+    for c in sip.chars() {
+        *counts.entry(c).or_insert(0) += 1;
+    }
+    // order by count, then by char
+    let mut counts: Vec<_> = counts.into_iter().collect();
+    counts.sort_by(|a, b| b.1.cmp(&a.1));
+    counts
+}
+
+fn rental_car_cost(d: u32) -> u32 {
+    if d >= 7 {
+        d * 40 - 50
+    } else if d >= 3 {
+        d * 40 - 20
+    } else {
+        d * 40
+    }
+}
+
+fn bin_to_decimal(inp: &str) -> i32 {
+    i32::from_str_radix(inp, 2).unwrap_or(0)
+}
+
+fn gimme(input_array: [i32; 3]) -> usize {
+    // Find the median by sorting a copy and taking the middle element
+    let mut sorted = input_array.clone();
+    sorted.sort();
+    let median = sorted[1];
+
+    // Find and return the index of the median in the original array
+    input_array.iter().position(|&x| x == median).unwrap()
+}
+
 fn sudoku(puzzle: &mut [[u8; 9]; 9]) {
     while !is_solved(puzzle) {
         let mut made_progress = false;

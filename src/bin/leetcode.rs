@@ -2,6 +2,49 @@
 
 use std::cell::Cell;
 
+fn nth_magical_number(n: i32, a: i32, b: i32) -> i32 {
+    let modulo = 1_000_000_007;
+
+    // 辅助函数：计算最大公约数 (GCD)
+    fn gcd(mut a: i32, mut b: i32) -> i32 {
+        while b != 0 {
+            let temp = b;
+            b = a % b;
+            a = temp;
+        }
+        a
+    }
+
+    // 计算最小公倍数 (LCM)
+    let common_divisor = gcd(a, b);
+    let lcm = (a as i64 * b as i64) / common_divisor as i64; // 使用 i64 防止溢出
+
+    // 二分查找的范围
+    // lower bound: min(a, b) (smallest possible magical number)
+    // upper bound: n * min(a, b) (a loose upper bound, could be up to n * max(a, b))
+    // A tighter upper bound can be n * min(a,b) because the nth number will be at least min(a,b) * n if there were no other multiples.
+    let mut low: i64 = 0;
+    let mut high: i64 = n as i64 * (a.min(b) as i64); // 更紧凑的上限 [4, 13]
+
+    let n_i64 = n as i64;
+
+    while low < high {
+        let mid = low + (high - low) / 2;
+        // 计算小于等于 mid 的神奇数字的数量
+        // count = (mid / a) + (mid / b) - (mid / lcm)
+        let count_magical = mid / (a as i64) + mid / (b as i64) - mid / lcm;
+
+        if count_magical < n_i64 {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
+    }
+
+    // 最终结果对 10^9 + 7 取模
+    (low % modulo as i64) as i32
+}
+
 fn max_area(height: Vec<i32>) -> i32 {
     let mut left = 0; // 左指针
     let mut right = height.len() - 1; // 右指针
