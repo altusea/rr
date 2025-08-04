@@ -3,6 +3,17 @@
 use std::collections::{BinaryHeap, HashSet};
 use std::net::Ipv4Addr;
 
+fn special_number(n: u64) -> String {
+    let mut n = n;
+    while n != 0 {
+        if n % 10 > 5 {
+            return "NOT!!".into();
+        }
+        n /= 10
+    }
+    "Special!!".into()
+}
+
 fn nth_smallest(nums: &[i32], pos: usize) -> i32 {
     // 创建数组的副本并排序
     let mut sorted_nums = nums.to_vec();
