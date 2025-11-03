@@ -1,6 +1,6 @@
 [package]
 name = "rr"
-version = "2025.10.0"
+version = "2025.11.0"
 edition = "2024"
 
 [dependencies]
@@ -26,3 +26,4 @@ sm3 = "0.4"
 blake2 = "0.10"
 chacha20poly1305 = "0.10"
 trpl = "0.3"
+crossfire = "2.1"
