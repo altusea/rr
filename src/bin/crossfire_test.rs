@@ -1,8 +1,6 @@
 extern crate crossfire;
 use crossfire::*;
-#[macro_use]
-extern crate tokio;
-use tokio::time::{Duration, interval, sleep};
+use tokio::time::{sleep, Duration};
 
 #[tokio::main]
 async fn main() {
