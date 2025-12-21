@@ -1,7 +1,13 @@
-use ulid::Ulid;
+use uuid::Uuid;
 
 fn main() {
-    let ulid = Ulid::new();
-    let s = ulid.to_string(); // generate a string for a ulid
-    println!("{}", s);
+    let id: Uuid = Uuid::now_v7();
+    println!("{}", id);
+    println!(
+        "{}",
+        match id.get_timestamp() {
+            Some(ts) => format!("{:?}", ts),
+            None => "".to_string(),
+        }
+    );
 }

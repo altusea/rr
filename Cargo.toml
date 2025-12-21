@@ -28,4 +28,4 @@ tempfile = "3.23"
 thiserror = "2.0"
 tokio = { version = "1", features = ["full"] }
 trpl = "0.3"
-ulid = "1.2"
+uuid = { version = "1.19", features = ["v4", "v7"] }
