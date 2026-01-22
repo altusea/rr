@@ -194,7 +194,7 @@ fn max_product(nums: Vec<i32>) -> i32 {
     result
 }
 
-fn move_zeroes(nums: &mut Vec<i32>) {
+fn move_zeroes(nums: &mut [i32]) {
     let mut non_zero_index = 0;
 
     for i in 0..nums.len() {
@@ -211,7 +211,7 @@ fn find_longest_word(s: String, dictionary: Vec<String>) -> String {
         let mut s_iter = s.chars();
         for ch in target.chars() {
             // 如果找不到当前字符 ch，则返回 false
-            if s_iter.find(|&c| c == ch).is_none() {
+            if !s_iter.any(|c| c == ch) {
                 return false;
             }
         }

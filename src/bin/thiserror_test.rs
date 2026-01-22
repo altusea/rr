@@ -14,7 +14,7 @@ pub enum DataStoreError {
 }
 
 fn main() {
-    let err = DataStoreError::Disconnect(io::Error::new(io::ErrorKind::Other, "oh no"));
+    let err = DataStoreError::Disconnect(io::Error::other("oh no"));
     println!("{:?}", err);
     let err = DataStoreError::Redaction("foo".to_string());
     println!("{:?}", err);

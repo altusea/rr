@@ -1,5 +1,3 @@
-use getrandom;
-
 fn get_random_u128() -> Result<u128, getrandom::Error> {
     let mut buf = [0u8; 16];
     getrandom::fill(&mut buf)?;

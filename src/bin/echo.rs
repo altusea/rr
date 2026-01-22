@@ -3,8 +3,7 @@ fn main() {
     let output = args
         .iter()
         .map(|arg| {
-            if arg.starts_with('$') {
-                let var_name = &arg[1..];
+            if let Some(var_name) = arg.strip_prefix('$') {
                 std::env::var(var_name).unwrap_or_else(|_| arg.clone())
             } else {
                 arg.clone()

@@ -50,7 +50,7 @@ fn bin_to_decimal(inp: &str) -> i32 {
 
 fn gimme(input_array: [i32; 3]) -> usize {
     // Find the median by sorting a copy and taking the middle element
-    let mut sorted = input_array.clone();
+    let mut sorted = input_array;
     sorted.sort();
     let median = sorted[1];
 
@@ -89,14 +89,7 @@ fn sudoku(puzzle: &mut [[u8; 9]; 9]) {
 
 // Check if puzzle is fully solved (no zeros remaining)
 fn is_solved(puzzle: &[[u8; 9]; 9]) -> bool {
-    for row in 0..9 {
-        for col in 0..9 {
-            if puzzle[row][col] == 0 {
-                return false;
-            }
-        }
-    }
-    true
+    puzzle.iter().flatten().all(|&cell| cell != 0)
 }
 
 // Get valid numbers that can be placed at puzzle[row][col]
@@ -156,9 +149,7 @@ fn snail(matrix: &[Vec<i32>]) -> Vec<i32> {
         for i in top..=bottom {
             result.push(matrix[i][right]);
         }
-        if right > 0 {
-            right -= 1;
-        }
+        right = right.saturating_sub(1);
 
         if top <= bottom {
             // Traverse left
