@@ -1,5 +1,5 @@
 use anyhow::{Context, Result};
-use rand::Rng;
+use rand::RngExt;
 
 fn might_fail(input: i32) -> Result<i32> {
     let mut rng = rand::rng(); // 获取线程局部的随机数生成器
