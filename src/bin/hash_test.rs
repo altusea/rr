@@ -1,7 +1,7 @@
-use blake2::{Blake2b512, Blake2s256};
+use blake2::{Blake2b512, Blake2s256, Digest as Blake2Digest};
 use hex::ToHex;
 use hex_literal::hex;
-use sm3::{Digest, Sm3};
+use sm3::{Digest as Sm3Digest, Sm3};
 
 fn main() {
     // create a hasher object, to use it do not forget to import `Digest` trait
